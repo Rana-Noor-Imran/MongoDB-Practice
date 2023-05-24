@@ -83,4 +83,15 @@ routes.route("/find").get(async (req,res)=>{
     console.log(foundData);
     res.send(foundData);
 });
+
+routes.route("/findOne-update").get(async (req,res)=>{
+    await company.findOneAndUpdate(
+        { "name" : "Testing Company" },
+        { $inc : {smsLimit : 200}, updated_At : new Date()},
+        {upsert:true, returnNewDocument : true}
+    ).then((doc)=>{
+        console.log(doc);
+    });
+});
+
 module.exports = routes;
